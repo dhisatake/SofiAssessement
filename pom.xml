@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.sofi.automation</groupId>
+    <artifactId>SofiAssessment</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <properties>
+        <geb.version>2.3</geb.version>
+        <spock.version>1.0-groovy-2.4</spock.version>
+        <surefire.version>2.20.1</surefire.version>
+        <groovy.version>2.4.10</groovy.version>
+        <selenium.version>3.141.59</selenium.version>
+    </properties>
+
+<dependencies>
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.12</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.codehaus.groovy</groupId>
+        <artifactId>groovy-all</artifactId>
+        <version>${groovy.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.codehaus.groovy.modules.http-builder</groupId>
+        <artifactId>http-builder</artifactId>
+        <version>0.7.2</version>
+    </dependency>
+    <dependency>
+        <groupId>com.mgl.automation.results</groupId>
+        <artifactId>SpockLogging</artifactId>
+        <version>3.5</version>
+    </dependency>
+    <dependency>
+        <groupId>org.spockframework</groupId>
+        <artifactId>spock-core</artifactId>
+        <version>${spock.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.gebish</groupId>
+        <artifactId>geb-spock</artifactId>
+        <version>${geb.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.seleniumhq.selenium</groupId>
+        <artifactId>selenium-chrome-driver</artifactId>
+        <version>${selenium.version}</version>
+    </dependency>
+</dependencies>
+
+    <profiles>
+    <profile>
+        <activation>
+            <property>
+                <name>environment</name>
+                <value>moviedb</value>
+            </property>
+        </activation>
+        <id>moviedb</id>
+        <properties>
+            <server.url>https://api.themoviedb.org</server.url>
+        </properties>
+    </profile>
+        <profile>
+            <activation>
+                <property>
+                    <name>environment</name>
+                    <value>sauce</value>
+                </property>
+            </activation>
+            <id>saucedemo</id>
+            <properties>
+                <server.url>https://www.saucedemo.com</server.url>
+            </properties>
+        </profile>
+    </profiles>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>junit</groupId>
+                        <artifactId>junit</artifactId>
+                        <version>4.11</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <excludes>
+                        <exclude>**/**.**</exclude>
+
+                    </excludes>
+
+                    <systemPropertyVariables>
+                        <api.dev.key>3d9ab4888f22de931185bebd4c6689d4</api.dev.key>
+                        <server.base.url>${server.url}</server.base.url>
+                        <webprofile.username>standard_user</webprofile.username>
+                        <webprofile.password>secret_sauce</webprofile.password>
+                        <webdriver.gecko.driver>C:/development/geckodriver.exe</webdriver.gecko.driver>
+                        <webdriver.ie.driver>C:/development/IEDriverServer.exe</webdriver.ie.driver>
+                        <webdriver.chrome.driver>C:/development/chromedriver.exe</webdriver.chrome.driver>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
